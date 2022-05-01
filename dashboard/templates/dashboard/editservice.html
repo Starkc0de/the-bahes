@@ -1,0 +1,64 @@
+<form method="POST" action="/dashboard/Edit_service/{{instance.id}}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="" class="bold-font">Supplier Name</label>
+        <input type="text" class="form-control" name="Supplier_Name" id="" value="{{instance.Supplier_Name}}" >
+        <!-- {{ service.Supplier_Name }} -->
+    </div>
+
+    <div class="form-group">
+        <label for="" class="bold-font">Business Country Location</label>
+        <input type="text" class="form-control" id="" value="{{instance.Business_Country_Location}}">
+        <!-- {{ service.Business_Country_Location }} -->
+
+    </div>
+
+    <div class="form-group">
+        <label for="" class="bold-font">Tailor Specialization</label>
+        <!-- {{ service.Tailor_Specialization }} -->
+        <select class="form-control" name="Tailor_Specialization" id="">
+            {% for data in specialization %}
+            <option class="active" value="{{data.id}}">{{instance.Tailor_Specialization}}</option>
+            <option value="WEDDING SERVICES">WEDDING SERVICES</option>
+            <option value="SUIT RESIZING">SUIT RESIZING</option>
+            <option value="DESHDASHA">DESHDASHA</option>
+            <option value="GOWN DRESSES">GOWN DRESSES</option>
+            <option value="CUSTOM ACCESSORIES">CUSTOM ACCESSORIES</option>
+            <option value="CASUAL CLOTHES">CASUAL CLOTHES</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="" class="bold-font">Targeted Customer</label>
+        <!-- {{ service.Targeted_Customer }} -->
+        <select class="form-control" name="Targeted_Customer" id="">
+            {% for data in customer %}
+            <option class="active" value="{{data.id}}">{{instance.Targeted_Customer}}</option>
+            <option value="Male">Male </option>
+            <option value="Female">Female</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="" class="bold-font">Tailor Staff Gender</label>
+        <!-- {{ service.Tailor_Staff_Gender }} -->
+        <select class="form-control" name="Tailor_Staff_Gender" id="">
+            {% for data in gender %}
+            <option class="active" value="{{data.id}}">{{instance.Tailor_Staff_Gender}}</option>
+            <option value="Male">Male </option>
+            <option value="Female">Female</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="" class="bold-font">Phone Number</label>
+        <!-- {{ service.Phone_Number }} -->
+        <input type="text" class="form-control" id="" name="Phone_Number" value="{{instance.Phone_Number}}" placeholder="xxxxxxxxxxxxxxx">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1" class="bold-font">Full Address</label>
+        <!-- {{ service.Full_Address }} -->
+        <textarea class="form-control" name="Full_Address" id="exampleFormControlTextarea1" rows="3">{{instance.Full_Address}}</textarea>
+    </div>
+    <div class="text-right"><button type="submit" class="btn btn-primary">Submit</button></div>
+</form>

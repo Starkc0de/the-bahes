@@ -1,0 +1,103 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+{% load countries %}
+{% get_countries as countries %}
+
+<section class="bg-form">
+  <div class="form-div">
+    <div class="container">
+      <div class="bg-colordiv">
+        <div class="row no-gutters">
+          <div class="col-md-8">
+            <div class="form-box">
+              <h2><span>Welcome to BAH'ES</span></h2>
+              {% if messages %}
+              <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+              <div class="form-title mb-4 mt-4">
+                Registration form.
+              </div>
+              <form method="POST" action="#" id="post-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="text" placeholder="First Name" name="username" class="input-style" required />
+                  <!-- {{ form.errors.username }} -->
+                  {% for error in form1.username.errors %}
+                  <p class="text-danger">{{ error|escape }}</p>
+                  {% endfor %}
+                </div>
+                <div class="form-group">
+                  <select id="#" class="input-style">
+                    {% for country in countries %}
+                    <option name="country">{{ country.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+
+                  <div class="numberinput">                    
+                    <input type="text" class="input-style" name="number" placeholder="XXXXXXXXXX" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="Email" placeholder="Email" name="email" class="input-style" required />
+                  {% for error in form1.email.errors %}
+                  <p class="text-danger">{{ error|escape }}</p>
+                  {% endfor %}                  
+                </div>
+                <div class="form-group">
+                  <input type="password" placeholder="Password" name="password1" class="input-style" required />
+                  {% for error in form1.password1.errors %}
+                  <p class="text-danger">{{ error|escape }}</p>
+                  {% endfor %}                  
+                </div>
+                <div class="form-group">
+                  <input type="password" placeholder="Confirm Password" name="password2" class="input-style" required />
+                  {% for error in form1.password2.errors %}
+                  <p class="text-danger">{{ error|escape }}</p>
+                  {% endfor %}                 
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1" class="bold-font">Upload Image</label>
+                  <input type="file" id="id_image" name="profile_image" />
+              </div>
+
+                <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      I accept all the terms and conditions.
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group text-right">
+                  <a href="{% url 'account:login_page' %}" type="submit" class="btn btn-secondary">BACK</a>
+                  <div id="image-box" class="image-container"></div>
+                  <button class="btn btn-outline-info" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
+                  <button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;" type="submit">REGISTER</button>
+                  <!-- <button type="submit" class="btn btn-primary">REGISTER</button> -->
+
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <img class="logo-form-shadow" src="{% static 'images/form-logo.jpg' %}" alt="" />
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}

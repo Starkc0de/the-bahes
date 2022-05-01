@@ -1,0 +1,333 @@
+{% extends 'base_template.html' %} {% block content %} {% load static %} {% load countries %} {% get_countries as countries %}
+
+<div class="banner-profile">
+    <div class="profile-overlay">
+        <div class="container">
+            <div class="heading-title supplies text-center">
+                <h1>
+                    <div class="left-cricle"></div>
+                    <div class="right-cricle"></div>
+                    <span>Profile</span>
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="breadcr4eam">
+    <div class="container">
+        <nav class="breadcrumb-new">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home:home_page' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item"><a href="#">Supplier Profile</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Post Services
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<section class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="profilebox">
+                    {% for data in profile %} <img src="{{data.profile_image.url}}" class="pexels-pixabay mb-2" />{% endfor %}
+                    <!-- Tabs nav -->
+                    <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
+                            role="tab" aria-controls="v-pills-home" aria-selected="true">
+                            Services</a>
+
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                            role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                            Post Services</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="bg-lightgray">
+                    <div class="buttons_left">
+                        <h1>{{request.user.username}}</h1>
+                    </div>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitches" />
+                        <label class="custom-control-label" for="customSwitches">Online</label>
+                    </div>
+                    {% for data in profile %}
+                    <div class="padding-tops">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="display_flex">
+                                    <i class="fa fa-calendar" style="font-size: 24px"></i>
+                                    <p class="joineds">{{data.Profile_date}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="display_flex">
+                                    <i class="fa fa-phone" style="font-size: 24px"></i>
+                                    <p class="joineds">{{data.number}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="display_flex">
+                                    <i class="fa fa-envelope" style="font-size: 24px"></i>
+                                    <p class="joineds">{{request.user.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 padding-lefts">
+                            <div class="tabbable-panel">
+                                <div class="tabbable-line">
+                                    <ul class="nav nav-tabs">
+                                        <li>
+                                            <a href="{% url 'dashboard:profile_page' %}">Edit Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'dashboard:chat_page' %}">Chat <span>5</span></a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="{% url 'dashboard:my_service_page' %}">My services</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'dashboard:my_product_page' %}">My products</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tabs content -->
+                <div class="tab-content profile-form" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+                        <div class="row">	
+                            {% for serv in service %}
+                            <div class="col-md-4">
+                                <div class="background-images">
+                                    <h4 class="Deshdasha">{{serv.Tailor_Specialization}}</h4>
+                                    <ul class="inlines">
+                                        <li class="list_style">
+                                            <i class="fa fa-edit"></i>
+                                            <a href="#" data-toggle="modal" data-id="{{serv.id}}" data-target="#exampleModal"
+                                                class="font-sizes service_1">Edit</a>
+                                        </li>
+                                        <li class="list_style">
+                                            <i class="fa fa-trash"></i>
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal"
+                                                class="font-sizes delete_service">Delete</a>
+                                            <!-- <form method="POST" action="{% url 'dashboard:del_service1' serv.id %}" >
+                                                {% csrf_token %}
+                                                <i class="fa fa-trash"></i>
+                                            <input type="submit" class="font-sizes" value="Delete">
+                                        </form> -->
+                                        </li>
+                                        <li class="list_style">
+                                            {% if data.status %}
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="customSwitches-active" id="{{data.id}}" servicestatus="{{data.status}}"/>
+                                                <label class="custom-control-label"
+                                                    for="customSwitches-active">Active</label>
+                                            </div>
+                                            {% else %}
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="customSwitches-active" id="{{data.id}}" servicestatus="{{data.status}}"/>
+                                                <label class="custom-control-label"
+                                                    for="customSwitches-active">Deactive</label>
+                                            </div>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div id="alert-box"></div>
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                            aria-labelledby="v-pills-profile-tab">
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                                    {{ message }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <form method="POST" action="#" enctype="multipart/form-data" id="post-form" >
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Supplier Name</label>
+                                    <input type="text" class="form-control" name="Supplier_Name" id="Supplier_Name"
+                                        placeholder="Rajat" required />
+                                    {% for error in form.Supplier_Name.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Business Country Location</label>
+                                    <select class="form-control" id="">
+                                        {% for country in countries %}
+                                        <option class="active" name="Business_Country_Location", id="Business_Country_Location">
+                                            {{ country.name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    {% for error in form.Business_Country_Location.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Tailor Specialization</label>
+                                    <select class="form-control" name="Tailor_Specialization" id="Tailor_Specialization">
+                                        <option class="active">Our Services</option>
+                                        <option>WEDDING SERVICES</option>
+                                        <option>SUIT RESIZING</option>
+                                        <option>DESHDASHA</option>
+                                        <option>GOWN DRESSES</option>
+                                        <option>CUSTOM ACCESSORIES</option>
+                                        <option>CASUAL CLOTHES</option>
+                                        {% for error in form.Tailor_Specialization.errors %}
+                                        <p class="text-danger">{{ error|escape }}</p>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Targeted Customer</label>
+                                    <select class="form-control" name="Targeted_Customer" id="Targeted_Customer">
+                                        <option class="active">select</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                    {% for error in form.Targeted_Customer.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Tailor Staff Gender</label>
+                                    <select class="form-control" name="Tailor_Staff_Gender" id="Tailor_Staff_Gender">
+                                        <option class="active">select</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                    {% for error in form.Tailor_Staff_Gender.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Experience</label>
+                                    <input type="" class="form-control" id="Experience" name="Experience" placeholder="Experience"
+                                        required />
+                                    {% for error in form.Experience.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Multinational Shipping</label>
+                                    <select class="form-control" name="Multinational_Shippping" id="Multinational_Shippping">
+                                        <option class="active">select</option>
+                                        <option>YES</option>
+                                        <option>NO</option>
+                                    </select>
+                                    {% for error in form.Multinational_Shippping.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="bold-font">Phone Number</label>
+                                    <input type="" class="form-control" id="Phone_Number" name="Phone_Number"
+                                        placeholder="xxxxxxxxxxxxxxx" required />
+                                    {% for error in form.Phone_Number.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1" class="bold-font">Full Address</label>
+                                    <input type="text" class="form-control" name="Full_Address" id="Full_Address"
+                                        placeholder="Address" required />
+                                    <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+                                    {% for error in form.Full_Address.errors %}
+                                    <p class="text-danger">{{ error|escape }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1" class="bold-font">Description</label>
+                                    <input type="text" class="form-control" name="service_disc" id="service_disc"
+                                        placeholder="Description" required />
+                                </div>
+                                
+                                
+                                <label for="" class="bold-font">Can the store ship the product outside the
+                                    country?</label>
+                                <div class="form-control checkbox-div">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="Check_Box" type="radio"
+                                        value="Yes" id="Check_Box" />
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Yes
+                                        </label>
+                                        {% for error in form.Check_Box.errors %}
+                                        <p class="text-danger">{{ error|escape }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value="No"
+                                            id="Check_Box" name="Check_Box" />
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            No
+                                        </label>
+                                        {% for error in form.Check_Box.errors %}
+                                        <p class="text-danger">{{ error|escape }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1" class="bold-font">Upload Image</label>
+                                    <input type="file" id="id_image" name="service_image" />
+                                </div>
+                                <div class="form-group">
+                                    <div id="image-box" class="image-container"></div>
+                                    <button class="btn btn-outline-info" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
+                                    <button class="btn btn-outline-info" class="btn btn-primary" id="confirm-btn" style="width: 100%; margin-top: 10px;" type="submit">Submit</button>
+                                    
+                                  </div>
+                            </form>
+                        </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <span class="close-box" data-dismiss="modal" aria-label="Close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+            <div id="edit_service_model_data" class="modal-body">
+               
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+{% endblock %}

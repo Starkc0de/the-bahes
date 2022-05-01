@@ -1,0 +1,188 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="banner-profile">
+    <div class="profile-overlay">
+        <div class="container">
+            <div class="heading-title supplies text-center">
+                <h1>
+                    <div class="left-cricle"></div>
+                    <div class="right-cricle"></div>
+                    <span>Profile</span>
+                </h1>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<div class="breadcr4eam">
+    <div class="container">
+        <nav class="breadcrumb-new">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home:home_page' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Supplier Profile</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chat</li>
+            </ol>
+        </nav>
+
+    </div>
+</div>
+<section class="bg-light">
+    <div class="container">
+
+
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="profilebox chartlist"> {% for data in profile %}<img src="{{data.profile_image.url}}"{% endfor %}
+                        class="pexels-pixabay mb-2">
+                    <!-- Tabs nav -->
+                    <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
+                            role="tab" aria-controls="v-pills-home" aria-selected="true"><span>T</span>John Smith<div
+                                class="two"></div></a>
+
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                            role="tab" aria-controls="v-pills-profile" aria-selected="false">
+
+                            <span>T</span> Test User</a>
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                            role="tab" aria-controls="v-pills-profile" aria-selected="false">
+
+                            <span>T</span> Test User</a>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="bg-lightgray">
+                    
+                    <div class="buttons_left">
+                        <h1>{{request.user.username}}</h1>
+                        
+                    </div>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitches">
+                        <label class="custom-control-label" for="customSwitches">Online</label>
+                    </div>
+                    {% for data in profile %}
+                    <div class="padding-tops">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="display_flex">
+                                    <i class="fa fa-calendar" style="font-size:24px"></i>
+                                    <p class="joineds">{{data.Profile_date}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="display_flex">
+                                    <i class="fa fa-phone" style="font-size:24px"></i>
+                                    <p class="joineds">{{data.number}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="display_flex">
+                                    <i class="fa fa-envelope" style="font-size:24px"></i>
+                                    <p class="joineds">{{request.user.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 padding-lefts">
+
+
+                            <div class="tabbable-panel">
+                                <div class="tabbable-line">
+                                    <ul class="nav nav-tabs">
+                                        <li>
+                                            <a href="{% url 'dashboard:profile_page' %}">Edit Profile</a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="{% url 'dashboard:chat_page' %}">Chat <span>5</span></a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'dashboard:my_service_page' %}">My services</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'dashboard:my_product_page' %}">My products</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Tabs content -->
+                <div class="tab-content profile-form" id="v-pills-tabContent">
+                    <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+
+
+                        <h4 class="user_1"><span>T</span>John Smith<br>
+                            <p class="Online">Online</p>
+                        </h4>
+
+                        <div class="row">
+                            <div class="main-dive">
+                                <div class="col-md-12">
+
+                                    <div class="chat_1">
+                                        <p class="text_lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                            sed diam nonumy eirmod tempor invidunt ut.</p>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="chat-2">
+                                        <p class="text_lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                            sed diam nonumy eirmod tempor invidunt ut.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="round-input_1">
+                            <input type="text" class="form-control round-input" placeholder="Write your message"><i
+                                class="fa fa-telegram" style="font-size:24px; color: #2088CA;"></i>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                        aria-labelledby="v-pills-profile-tab">
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

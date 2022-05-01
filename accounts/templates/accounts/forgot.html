@@ -1,0 +1,82 @@
+{% extends 'base_template.html' %} {% block content %} {% load static %}
+
+<section class="bg-form">
+  <div class="form-div">
+    <div class="container">
+      <div class="bg-colordiv">
+        <div class="row no-gutters">
+          <div class="col-md-8">
+            <div class="form-box">
+              <h2><span>Welcome to BAH'ES</span></h2>
+              <div class="form-title mb-4 mt-4">FORGOT PASSWORD</div>
+
+              <div class="form-group">
+                <input type="email" placeholder="Email" class="input-style" />
+                <p class="Resetting">
+                  Don't worry! Resetting your password is easy, Just type the
+                  email you registered with.
+                </p>
+              </div>
+
+              <div class="form-group">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  SEND OTP
+                </button>
+              </div>
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">OTP</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <label><span class="normal">Your </span>confirmation
+                        code</label>
+                      <div class="confirmation_code split_input large_bottom_margin" data-multi-input-code="true">
+                        <div class="confirmation_code_group">
+                          <div class="split_input_item input_wrapper">
+                            <input type="text" class="inline_input" maxlength="1" />
+                          </div>
+                          <div class="split_input_item input_wrapper">
+                            <input type="text" class="inline_input" maxlength="1" />
+                          </div>
+                          <div class="split_input_item input_wrapper">
+                            <input type="text" class="inline_input" maxlength="1" />
+                          </div>
+                          <div class="split_input_item input_wrapper">
+                            <input type="text" class="inline_input" maxlength="1" />
+                          </div>
+                          <div class="split_input_item input_wrapper">
+                            <input type="text" class="inline_input" maxlength="1" />
+                          </div>
+                          <div class="split_input_item input_wrapper">
+                            <input type="text" class="inline_input" maxlength="1" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <img class="logo-form-shadow" src="{% static 'images/form-logo.jpg' %}" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

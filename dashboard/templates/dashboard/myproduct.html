@@ -1,0 +1,461 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+{% load countries %} {% get_countries as countries %}
+
+
+<div class="banner-profile">
+    <div class="profile-overlay">
+        <div class="container">
+            <div class="heading-title supplies text-center">
+                <h1>
+                    <div class="left-cricle"></div>
+                    <div class="right-cricle"></div>
+                    <span>Profile</span>
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="breadcr4eam">
+    <div class="container">
+        <nav class="breadcrumb-new">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item"><a href="#">Supplier Profile</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">My Products</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<section class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="profilebox">
+                    {% for data in profile %}<img src="{{data.profile_image.url}}" class="pexels-pixabay mb-2">{% endfor %}
+                    <!-- Tabs nav -->
+                    <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical"> <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill"
+                            href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+
+                            Products <div class="three"></div></a>
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                            role="tab" aria-controls="v-pills-profile" aria-selected="false">
+
+                            Post Product</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="bg-lightgray">
+                    <div class="buttons_left">
+                        <h1>{{request.user.username}}</h1>
+                    </div>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitches">
+                        <label class="custom-control-label" for="customSwitches">Online</label>
+                    </div>
+                    {% for data in profile %}
+                    <div class="padding-tops">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="display_flex"> <i class="fa fa-calendar" style="font-size:24px"></i>
+                                    <p class="joineds">{{data.Profile_date}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="display_flex"> <i class="fa fa-phone" style="font-size:24px"></i>
+                                    <p class="joineds">{{data.number}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="display_flex"> <i class="fa fa-envelope" style="font-size:24px"></i>
+                                    <p class="joineds">{{request.user.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 padding-lefts">
+                            <div class="tabbable-panel">
+                                <div class="tabbable-line">
+                                    <ul class="nav nav-tabs">
+                                        <li> <a href="{% url 'dashboard:profile_page' %}">Edit Profile</a>
+                                        </li>
+                                        <li> <a href="{% url 'dashboard:chat_page' %}">Chat</a>
+                                        </li>
+                                        <li> <a href="{% url 'dashboard:my_service_page' %}">My services</a>
+                                        </li>
+                                        <li class="active"> <a href="{% url 'dashboard:my_product_page' %}">My
+                                                products</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tabs content -->
+                <div class="tab-content profile-form" id="v-pills-tabContent">
+                    <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+                     <div class="row">
+                        <div class="col-md-4">
+                            {% if request.user.is_authenticated %}
+                                {% for product in page_obj.object_list %}
+                                <div class="product-boxe">
+                                    {% if product.Upload_Image %}
+                                    <img src="{{product.Upload_Image.url}}" alt="" />
+                                    {% endif %}
+                                    {% if product.Thread_Image %}
+                                    <img src="{{product.Thread_Image.url}}" alt="" />
+                                    {% endif %}  
+                                    {% if product.Fabric_Type %}
+                                    <h3 class="sewing">{{product.Fabric_Type}}</h3>
+                                    {% endif %}
+                                    {% if product.Tailor_Specialization %}
+                                    <p> <span class="kw">{{product.Tailor_Specialization}}</span></p>                                    
+                                    {% endif %}
+                                    {% if product.Fabric_Price %}
+                                    <a class="kw" href="#">{{product.Fabric_Price}}</a>
+                                    {% endif %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                                                                                
+                                    {% if product.Thread_Available_Quantity %}
+                                    <h3 class="sewing">{{product.Thread_Available_Quantity}}</h3>
+                                    {% endif %}
+                                    {% if product.Thread_Type %}
+                                    <p> <span class="kw">{{product.Thread_Type}}</span></p>
+                                    {% endif %}
+                                    {% if product.Thread_Price %}
+                                    <span><a class="kw" href="#">{{product.Thread_Price}}</a></span>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                                    <ul class="inlienes">
+                                        <li class="inline-list"><i class="fa fa-edit"></i>
+                                            <a href="{% url 'dashboard:Product_edit' product.id %}" class="font-sizes edit_product">Edit</a>
+                                        </li>
+                                        <li class="inline-list">
+                                            <form method="POST" action="{% url 'dashboard:delelte_product' product.id %}" >
+                                                {% csrf_token %}
+                                                <!-- <a href="" class="font-sizes">Delete</a> -->
+                                                <!-- <a href="" class="font-sizes">Delete</a> -->
+                                                <i class="fa fa-trash"></i>
+                                            <input type="submit" class="font-sizes" value="Delete">
+                                        </form>
+                                        </li>
+                                        <li class="inline-list">
+                                            <div class="custom-control custom-switch font-sizes">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="customSwitches-active-2">
+                                                <label class="custom-control-label "
+                                                    for="customSwitches-active-2">Active</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>                           
+                                {% endfor %}
+                            {% endif %}
+                            
+                            </div>
+                        </div>
+                        <nav aria-label="Page navigation " class="supplier-pagination mt-5">
+                            {% if page_obj.has_other_pages %}
+                            <ul class="pagination justify-content-center">
+                              {% if page_obj.has_previous %}
+                              <li class="page-item">
+                                <a
+                                  href="?page={{ page_obj.previous_page_number }}"
+                                  class="page-link"
+                                  >Previous</a
+                                >
+                              </li>
+                              {% else %}
+                              <li class="active"><span>Previous</span></li>
+                              {% endif %} {% for i in page_obj.paginator.page_range %} 
+                              {% if page_obj.number == i %}
+                              <li class="active">
+                                <span class="page-item"
+                                  >{{ i }} <span class="sr-only">(current)</span></span
+                                >
+                              </li>
+                              {% else %}
+                              <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                              {% endif %} {% endfor %} {% if page_obj.has_next %}
+                              <li>
+                                <a
+                                  href="?page={{ page_obj.next_page_number }}"
+                                  class="page-link"
+                                  >Next</a
+                                >
+                              </li>
+                              {% else %}
+                              <li class="disabled"><span>Next</span></li>
+                              {% endif %}
+                            </ul>
+                            {% endif %}
+                        </nav>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                        aria-labelledby="v-pills-profile-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul id="tabs" class="nav nav-tabs tabsss">
+                                    <li class="nav-item"><a href="" data-target="#home1" data-toggle="tab"
+                                            class="nav-link small text-uppercase active blues">Fabrics</a>
+                                    </li>
+                                    <li class="nav-item"><a href="" data-target="#messages1" data-toggle="tab"
+                                            class="nav-link small text-uppercase gray">Sewing, yarn and
+                                            <br>accessories</a>
+                                    </li>
+                                </ul>
+                                <br>
+                                <div id="tabsContent" class="tab-content">
+                                    <div id="home1" class="tab-pane fade active show">
+                                        <form method="POST" action= "#" enctype="multipart/form-data" id="task-form">
+                                            {% csrf_token %}{{form.as_p}}
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Country Origin</label>
+                                                <select class="form-control" id="c">
+                                                    {% for country in countries %}
+                                                    <option class="active" name="Country_Origin" id="Country_Origin">{{country.name }}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Fabric Type</label>
+                                                <input type="" class="form-control" id="Fabric_Type" name="Fabric_Type" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Tailor Specialization</label>
+                                                <input type="" class="form-control" id="Tailor_Specialization" name="Tailor_Specialization" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Fabric Price</label>
+                                                <input type="" class="form-control" id="Fabric_Price" name="Fabric_Price" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Fabric Available Quantity</label>
+                                                <input type="" class="form-control" id="Fabric_Available_Quantity"
+                                                    name="Fabric_Available_Quantity" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Size Width</label>
+                                                <input type="" class="form-control" id="Size_Width"
+                                                    name="Size_Width" required>
+                                            </div>
+                                            <div class="img-check">
+                                                <ul class="checkboxes">
+                                                    <li class="checkss">
+                                                        <input type="checkbox" id="myCheckbox32" name="Check_Febric" />
+                                                        <label class="pull" for="myCheckbox32">
+                                                            <img src="{% static 'images/Laundry.png' %}" />
+                                                        </label>
+                                                    </li>
+                                                    <li class="checkss">
+                                                        <input type="checkbox" id="myCheckbox34" name="Check_Febric" />
+                                                        <label class="pull" for="myCheckbox34">
+                                                            <img src="{% static 'images/Laundry.png' %}" />
+                                                        </label>
+                                                    </li>
+                                                    <li class="checkss">
+                                                        <input type="checkbox" id="myCheckbox37" name="Check_Febric" />
+                                                        <label class="pull" for="myCheckbox37">
+                                                            <img src="{% static 'images/Laundry.png' %}" />
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Fabric Season</label>
+                                                <input type="" class="form-control" id="Fabric_Season"
+                                                    name="Fabric_Season" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="bold-font">Other Description</label>
+                                                <textarea class="form-control" id="Other_Description" rows="3" name="Other_Description"
+                                                    required></textarea>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4 class="bold-font">Upload Image</h4>
+                                                        <input type="file" id="Upload_Image" name="Upload_Image" >
+                                                </div>
+
+                                            </div>&nbsp;
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary" name="htmlsubmitbutton1">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="messages1" class="tab-pane fade">
+                                        <ul class="nav nav-tabs centers" role="tablist">
+                                            <li class="nav-item"> <a class="nav-link active btn btn-primary primarys-1"
+                                                    data-toggle="tab" href="#tabs-1" role="tab">THREADS</a>
+                                            </li>
+                                            <li class="nav-item"> <a class="nav-link btn btn-primary primarys-2"
+                                                    data-toggle="tab" href="#tabs-2" role="tab">BUTTONS
+                                                    AND<br>CLOSURES</a>
+                                            </li>
+                                            <li class="nav-item"> <a class="nav-link btn btn-primary primarys-3"
+                                                    data-toggle="tab" href="#tabs-3" role="tab">ZIPPERS, TAPE, TRIM,<br>
+                                                    AND ELASTIC</a>
+                                            </li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                                <form method="POST" action= "#" enctype="multipart/form-data">
+                                                    {% csrf_token %}{{form1.as_p}}
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Thread Type</label>
+                                                        <input type="" class="form-control" name="Thread_Type" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Thread Price</label>
+                                                        <input type="" class="form-control" name="Thread_Price" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Fabric Available
+                                                            Quantity</label>
+                                                        <input type="" class="form-control" name="Thread_Available_Quantity" id="">
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Other Description</label>
+                                                        <textarea class="form-control" id="" name="Thread_Description" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h4 class="bold-font">Upload Image</h4>
+                                                                <input type="file" id="up" name="Thread_Image" >
+                                                        </div>
+                                                    </div>&nbsp;
+                                                    <div class="text-right">
+                                                        <button type="submit" class="btn btn-primary" name="htmlsubmitbutton2">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                                <form method="POST" action= "#" enctype="multipart/form-data">
+                                                    {% csrf_token %}{{form2.as_p}}
+                                                
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Type Of Material</label>
+                                                        <input type="" name="Type_Of_Material" class="form-control" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="formControlRange" class="bold-font">Size
+                                                            Width</label>
+                                                            <input type="" name="Size"  class="form-control" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Country Origin</label>
+                                                        <select class="form-control" id="">
+                                                            {% for country in countries %}
+                                                            <option class="active" name="Origin" >{{country.name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Price</label>
+                                                        <input type="" name="Price" class="form-control" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Color Picker</label>
+                                                        <div class="picker">
+                                                            <input type="color" value="#FFB61A" name="Color_Picker" autocomplete="off" spellcheck="false">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Other Description</label>
+                                                        <textarea class="form-control" id="" name="B_Description" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4 class="bold-font">Upload Image</h4>
+                                                            <input type="file" id="up" name="B_Upload_Image" >
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4 class="bold-font">Upload Image</h4>
+                                                            <input type="file" id="up" name="B_Upload_Image_1" >
+                                                        </div>
+
+                                                    </div>&nbsp;
+                                                    <div class="text-right">
+                                                        <button type="submit" class="btn btn-primary" name="htmlsubmitbutton3" >Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                                <form method="POST" action= "#" enctype="multipart/form-data">
+                                                    {% csrf_token %}{{form3.as_p}}
+
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Type</label>
+                                                        <input type="" name="Type" class="form-control" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Country Origin</label>
+                                                        <select class="form-control" id="">
+                                                            {% for country in countries %}
+                                                            <option class="active" name="Country_4" >{{country.name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Size
+                                                            Width</label>
+                                                            <input type="" name="Size_Zipper" class="form-control" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Price</label>
+                                                        <input type="" name="Z_Price" class="form-control" id="">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Roller</label>
+                                                        <input type="" name="Roller" class="form-control" id="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Color Picker</label>
+                                                        <div class="picker">
+                                                            <input type="text" name="Z_Color_Picker" class="form-control" autocomplete="off" spellcheck="false">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="bold-font">Other Description</label>
+                                                        <textarea class="form-control" name="D_Description" id="" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h4 class="bold-font">Upload Image</h4>
+                                                            <input type="file" id="up" name="Z_Upload_Image" >
+                                                        </div>
+                                                    </div>&nbsp;
+                                                    <div class="text-right">
+                                                        <button type="submit" class="btn btn-primary" name="htmlsubmitbutton4" >Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</section>
+{% endblock %}

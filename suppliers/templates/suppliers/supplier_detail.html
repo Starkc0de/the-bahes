@@ -1,0 +1,130 @@
+{% extends 'base_template.html' %} {% block content %} {% load static %}
+
+<div class="banner-profile">
+  <div class="profile-overlay">
+    <div class="container">
+      <div class="heading-title supplies text-center">
+        <h1>
+          <div class="left-cricle"></div>
+          <div class="right-cricle"></div>
+          <span>Suppliers</span>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="breadcr4eam">
+  <div class="container">
+    <nav class="breadcrumb-new">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Find Suppliers</a></li>
+        <li class="breadcrumb-item active">Raza Murad</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="bg-lightshow">
+  <div class="title-supplier mb-5">
+    <div class="container">
+      <h3>Suppliers</h3>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div>
+          <div class="supliers-left" style="height: auto">
+            <img src="{% static 'images/pexels-cottonbro-4620635.jpg' %}" alt="" />
+            <div class="ask-question">
+              <a href="#" class="btn btn-primary btn-block"
+                ><i class="fa fa-comments-o"></i> Ask me question</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="heading_raza">
+          <p class="color_p">
+            Raza Murad <span class="online_span">Online</span>
+          </p>
+        </div>
+        <div class="supliers-list">
+          <h2 class="mb-4">Services</h2>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="background-images">
+                <h4 class="Deshdasha">{{object.Tailor_Specialization}}</h4>
+              </div>
+              <div class="card-body background-colors">
+                <div class="name_card">
+                  <div class="name-sup">Location</div>
+                  <div class="surname">{{object.Business_Country_Location}}</div>
+                </div>
+                <div class="name_card">
+                  <div class="name-sup">Specialization</div>
+                  <div class="surname">{{object.Tailor_Specialization}}</div>
+                </div>
+                <div class="name_card">
+                  <div class="name-sup">Experience</div>
+                  <div class="surname">{{object.Experience}}</div>
+                </div>
+                <div class="name_card">
+                  <div class="name-sup">Multinational Shopping</div>
+                  <div class="surname">{{object.Multinational_Shippping}}</div>
+                </div>
+                <div class="name_card">
+                  <div class="name-sup">Targeted Customer</div>
+                  <div class="surname">{{object.Targeted_Customer}}</div>
+                </div>
+                <div class="name_card">
+                  <div class="name-sup">Gender</div>
+                  <div class="surname">{{object.Tailor_Staff_Gender}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="mb-4 mt-4">Products</h2>
+
+          <div class="row">
+          {% for data in febric %}
+            <div class="col-md-3">
+              <div class="product-box textlimit">
+                <img src="{{data.Upload_Image.url}}" alt="" />
+                <h4 data-maxlength="15"><span>{{data.Tailor_Specialization}}</span></h4>
+                <p data-maxlength="15"><span>{{data.Fabric_Type}}</span></p>
+                <div class="text-right">
+                  <a class="kw" href="#" tabindex="0">{{data.Fabric_Price}}</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            <div class="col-md-3">
+              <div class="productboxl">
+                <img src="{% static 'images/service-3-1170x658.png' %}" alt="" />
+                <div class="overlay-faf">
+                  <a href="#"
+                    >3 <i class="fa fa-plus" aria-hidden="true"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding-top: 21px">
+            <div class="text-right">
+              <a href="{% url 'product:product_page' %}">View More...</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+
+<section class="bg-form">
+    <div class="form-div">
+        <div class="container">
+            <div class="bg-colordiv">
+                <div class="row no-gutters">
+                    <div class="col-md-8">
+                        <div class="form-box">
+                            <h2><span>Welcome to BAH'ES</span></h2>
+                            <div class="form-title mb-4 mt-4">
+                                Will you rather to?
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <a href="#" class="customer">
+                                        <div class="chaperter">A</div>
+                                        <!-- <h3>OPTION</h3> -->
+                                        <p class="description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                                            erat, sed diam voluptua. At vero eos et.</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <a href="#" class="customer">
+                                        <div class="chaperter">B</div>
+                                        <p class="description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                                            erat, sed diam voluptua. At vero eos et.</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <a href="#" class="customer">
+                                        <div class="chaperter">C</div>
+                                        <p class="description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                                            erat, sed diam voluptua. At vero eos et.</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <a href="#" class="customer">
+                                        <div class="chaperter">D</div>
+                                        <p class="description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                                            erat, sed diam voluptua. At vero eos et.</p>
+                                    </a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group mt-5 text-right">
+                                <button type="button" class="btn btn-secondary">Back</button>
+                                <a href="{% url 'dashboard:profile' %}" class="btn btn-primary">NEXT</a>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <img class="logo-form-shadow" src="images/form-logo.jpg" alt="" />
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

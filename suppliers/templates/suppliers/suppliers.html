@@ -1,0 +1,247 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="banner-profile" style="background-image:url({{supplier_back|background_img}})">
+	<div class="profile-overlay">
+		<div class="container">
+			<div class="heading-title supplies text-center">
+				<h1>
+					<div class="left-cricle"></div>
+					<div class="right-cricle"></div>
+					{% for side in tittle_service %}
+					<span>{{side.supplier_tittle}}</span>
+					{% endfor %}
+				</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="breadcr4eam">
+	<div class="container">
+		<nav class="breadcrumb-new">
+			<ol class="breadcrumb">
+				{% for tittle in tittle_service %}
+				<li class="breadcrumb-item"><a href="#">{{tittle.supplier_tittle}}</a></li>
+				{% endfor %}
+			</ol>
+		</nav>
+
+	</div>
+</div>
+
+<section class="bg-lightshow">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="supliers-left">
+					<h3>Filter</h3>
+					<div class="filter-menu">
+						<div class="accordion" id="faq">
+							<div class="card">
+								<div class="card-header" id="faqhead1">
+									<a href="supplier-view.php" class="btn-header-link" data-toggle="collapse"
+										data-target="#faq1" aria-expanded="true" aria-controls="faq1">Products</a>
+								</div>
+
+								<div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+									<div class="card-body">
+										<ul>
+											{% for side in result_list %}
+											{% if side.Thread_Type %}
+											<li><a href="#">{{side.Thread_Type}}<span><input type="checkbox" /></span></a></li>{% endif %}																																			
+										</ul>
+										<ul>
+											{% if side.Fabric_Type %}			
+											<li><a href="#">{{side.Fabric_Type}}<span><input type="checkbox" /></span></a></li></ul>{% endif %}{% endfor %}
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header" id="faqhead2">
+									<a href="supplier-view.php" class="btn-header-link collapsed" data-toggle="collapse"
+										data-target="#faq2" aria-expanded="true" aria-controls="faq2">Services</a>
+								</div>
+								<div id="faq2" class="collapse show" aria-labelledby="faqhead2" data-parent="#faq"
+									style="border-bottom:0px;">
+									<div class="card-body">
+										<ul>										
+											{% for side in serviceSide %}
+											<li><a href="#">{{side.Tailor_Specialization}}<span><input
+															type="checkbox"  value="{{side.Tailor_Specialization}}" class="service"  /></span></a></li>
+											{% endfor %}											
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-9">
+				<div class="supplier_colorbox">
+					<h3 class="mb-4">Suppliers
+						<div class="supplier_count"><span>10</span>
+						</div>
+					</h3>
+					<div class="supplier_counts">
+						<p class="sortby">Sort By :</p>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle buttonss" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								Latest
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Action</a>
+								<a class="dropdown-item" href="#">Another action</a>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="supliers-list">
+					<div class="row">
+						
+						{% for supplie in page_obj.object_list %}
+						<div class="col-md-4 mb-4">
+							<div class="suppliers-box-slider sub-slider-1 suppliers-list-box">
+								<div class="overlay-sup">
+									<div class="sup-div">
+										<a href="{% url 'supplier:detail_page' supplie.pk %}" data-maxlength="10">
+											<div class="Name-razamurad"> {{supplie.Supplier_Name}}</div>
+										</a>
+									</div>
+
+
+									<div class="sup-div">
+										<a href="{% url 'supplier:detail_page' supplie.pk %}" data-maxlength="10">
+											<div class="name-sup">Location</div>
+											<div class="surname">{{supplie.Business_Country_Location}}</div>
+										</a>
+									</div>
+
+									<div class="sup-div">
+										<a href="{% url 'supplier:detail_page' supplie.pk %}" data-maxlength="10">
+											<div class="name-sup">Specialization</div>
+											<div class="surname">{{supplie.Tailor_Specialization}}</div>
+										</a>
+									</div>
+
+									<div class="sup-div ">
+										<a href="{% url 'supplier:detail_page' supplie.pk %}" data-maxlength="10">
+											<div class="name-sup">Experience</div>
+											<div class="surname">{{supplie.Experience}}</div>
+										</a>
+									</div>
+									<div class="sup-div ">
+										<a href="{% url 'supplier:detail_page' supplie.pk %}" data-maxlength="10">
+											<div class="name-sup">Multinational Shippping</div>
+											<div class="surname">{{supplie.Multinational_Shippping}}</div>
+										</a>
+									</div>
+
+									<div class="sup-div">
+										<a href="{% url 'supplier:detail_page' supplie.pk %}" data-maxlength="10">
+											<div class="name-sup">Targeted Customer</div>
+											<div class="surname">{{supplie.Targeted_Customer}}</div>
+										</a>
+									</div>
+
+									<div class="sup-div">
+										<a href="{% url 'supplier:detail_page' supplie.pk %}" data-maxlength="10">
+											<div class="name-sup">Gender</div>
+											<div class="surname">{{supplie.Tailor_Staff_Gender}}</div>
+										</a>
+									</div>
+									<div class="view-profile" data-toggle="modal" data-target="#exampleModal">
+										<i class="fa fa-eye"></i> View Profile
+									</div>
+								</div>
+
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+
+
+					<nav aria-label="Page navigation " class="supplier-pagination">
+						{% if page_obj.has_other_pages %}
+						<ul class="pagination justify-content-center">
+						  {% if page_obj.has_previous %}
+						  <li class="page-item">
+							<a
+							  href="?page={{ page_obj.previous_page_number }}"
+							  class="page-link"
+							  >Previous</a
+							>
+						  </li>
+						  {% else %}
+						  <li class="active"><span>Previous</span></li>
+						  {% endif %} {% for i in page_obj.paginator.page_range %} 
+						  {% if page_obj.number == i %}
+						  <li class="active">
+							<span class="page-item"
+							  >{{ i }} <span class="sr-only">(current)</span></span
+							>
+						  </li>
+						  {% else %}
+						  <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+						  {% endif %} {% endfor %} {% if page_obj.has_next %}
+						  <li>
+							<a
+							  href="?page={{ page_obj.next_page_number }}"
+							  class="page-link"
+							  >Next</a
+							>
+						  </li>
+						  {% else %}
+						  <li class="disabled"><span>Next</span></li>
+						  {% endif %}
+						</ul>
+						{% endif %}
+					</nav>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="view-profile-div">
+		<div class="ksd">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content ">
+					<span class="close-box" data-dismiss="modal" aria-label="Close">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</span>
+					<div class="modal-body padding-ksd">
+						<div class="ksd-pay bg-colorform">
+							<p>Kindly pay one time Registration Fee.</p>
+							<h2>29.900 kd</h2>
+							<a href="#" class="pay-now">Pay Now</a>
+						</div>
+
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+
+
+{% endblock %}

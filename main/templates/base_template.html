@@ -1,0 +1,727 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bahes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel='stylesheet' href="{% static 'css/slick.css' %}">
+  <link rel='stylesheet' href="{% static 'css/slick-theme.css' %}">
+  <link rel="shortcut icon" href="{% static 'images/fevicon.png' %}" type="image" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+  <!-- cropper -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+  <script type="text/javascript">
+    var before_loadtime = new Date().getTime();
+    window.onload = Pageloadtime;
+    function Pageloadtime() {
+      var aftr_loadtime = new Date().getTime();
+      t = Math.round((aftr_loadtime - before_loadtime) / 60)
+    }
+    $.getJSON('http://ip.jsontest.com/', function (data) {
+      var i = JSON.stringify(data.ip, null, 2)
+      var c = (new Date()).toString().split('(')[1].split(" ")[0]
+      var b = (function (agent) {
+        switch (true) {
+          case agent.indexOf("edge") > -1: return "MS Edge";
+          case agent.indexOf("edg/") > -1: return "Edge ( chromium based)";
+          case agent.indexOf("opr") > -1 && !!window.opr: return "Opera";
+          case agent.indexOf("chrome") > -1 && !!window.chrome: return "Chrome";
+          case agent.indexOf("trident") > -1: return "MS IE";
+          case agent.indexOf("firefox") > -1: return "Mozilla Firefox";
+          case agent.indexOf("safari") > -1: return "Safari";
+          default: return "other";
+        }
+      })(window.navigator.userAgent.toLowerCase());
+      var w = window.location.origin
+      var s = '{{script_id}}'
+      $.ajax({
+        type: 'POST',
+        url: '{{BASE_URL}}/tracking-code/',
+        dataType: 'json',
+        data: { 'i': i, 'c': c, 'b': b, 'w': w, 's': s, 't': t },
+      });
+    });
+  </script>
+
+</head>
+
+
+<body>
+  <!-- Pageloader -->
+  <div class="pageloader"></div>
+  <nav class="navbar navbar-expand-lg  bg-black fixed-top">
+    <div class="container"> <a class="navbar-brand" href="{% url 'home:home_page' %}"><img
+          src="{% static 'images/logo.png' %}" alt="" /></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"> <i class="fa fa-bars"
+          aria-hidden="true"></i></button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto menutop">
+          <li class="nav-item active"> <a class="nav-link" href="{% url 'home:home_page' %}">Home</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'supplier:supplier_page' %}">Find Suppliers</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'service:service_page' %}">Find Services</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'product:product_page' %}">Find Products</a> </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{request.user.username}}</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'dashboard:profile_page' %}">Dashboard </a>
+              <a href="{% url 'account:logout_page' %}"
+                class="dropdown-item {% if 'login' in request.build_absolute_uri %} active  {% endif %}">logout</a>
+            </div>
+            {% else %}
+          <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Register </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item {% if 'login_page' in request.build_absolute_uri %} active  {% endif %}"
+                href="{% url 'account:login_page' %}">Login</a>
+              <a class="dropdown-item {% if 'account:registration_page' in request.build_absolute_uri %} active  {% endif %}"
+                href="{% url 'account:registration_page' %}">Registration</a>
+            </div>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-------------------------------------end header------------------------------------------>
+
+  {% block content %}
+  {% endblock %}
+
+  <!-------------------------------------start footer------------------------------------------>
+
+
+  <footer>
+    <div class="footer-blue">
+      <div class="container">
+        <div class="text-right footer-icon">
+          <a class="facebook" href="{% url 'social:begin' 'github' %}"><img
+              src="{% static 'images/footer-icon-1.png' %}" alt=""></a>
+          <a class="facebook" href="#"><img src="{% static 'images/footer-icon-2.png' %}" alt=""></a>
+          <a class="facebook" href="#"><img src="{% static 'images/footer-icon-3.png' %}" alt=""></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-foorer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="footer-logo">
+              <img src="{% static 'images/footer-logo.png' %}" alt="" />
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="footer-link">
+              <h3>Quick Links</h3>
+              <ul>
+                <li><a href="{% url 'home:home_page' %}">Home </a></li>
+                <li><a href="{% url 'supplier:supplier_page' %}">Suppliers </a></li>
+                <li><a href="{% url 'service:service_page' %}">Services </a></li>
+                <li><a href="{% url 'product:product_page' %}">Products</a></li>
+                <li><a href="{% url 'account:registration_page' %}">Register</a></li>
+              </ul>
+
+            </div>
+          </div>
+          <div class="col-md-3">
+
+            <div class="footer-link">
+              <h3>Our Services</h3>
+
+              {{'footer_services'|get_footer_services}}
+
+
+              <div class="text-right col-md-11 pr-0">
+                <a href="{% url 'service:service_page' %}" class="viewmore">View More...</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="footer-link">
+              <h3>Other Pages</h3>
+              <ul>
+                <li><a href="{% url 'contact:contact_page' %}">Contact us
+                <li><a href="{% url 'about:about_page' %}">About us </a></li>
+                <li><a href="{% url 'privacy_policy:privacy_page' %}">Privacy policy </a></li>
+                <!--<li><a href="terms-of-use.php">terms of use </a></li>-->
+                <li><a href="{% url 'privacy_policy:faq_page' %}">FAQ</a></li>
+
+
+              </ul>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <!-- cropper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+  <script src="{% static 'js/slick.js' %}"></script>
+  <script src="{% static 'js/bootstrap-multiselect.js' %}"></script>
+
+
+  <!-- ----------------------------------------crop script------------------------------------->
+  <script>
+
+    const imagebox = document.getElementById('image-box')
+    const crop_btn = document.getElementById('crop-btn')
+    const input = document.getElementById('id_image')
+
+    // When user uploads the image this event will get triggered
+    input.addEventListener('change', () => {
+      const img_data = input.files[0]
+      const url = URL.createObjectURL(img_data)
+
+      imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%;">`
+      const image = document.getElementById('image')
+
+      document.getElementById('image-box').style.display = 'block'
+      document.getElementById('crop-btn').style.display = 'block'
+      document.getElementById('confirm-btn').style.display = 'none'
+
+      const cropper = new Cropper(image, {
+        autoCropArea: 1,
+        viewMode: 1,
+        scalable: false,
+        zoomable: false,
+        movable: false,
+        minCropBoxWidth: 200,
+        minCropBoxHeight: 200,
+      })
+
+      crop_btn.addEventListener('click', () => {
+        cropper.getCroppedCanvas().toBlob((blob) => {
+
+          let fileInputElement = document.getElementById('id_image');
+          let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+          let container = new DataTransfer();
+          container.items.add(file);
+          fileInputElement.files = container.files;
+
+          document.getElementById('image-box').style.display = 'none'
+          document.getElementById('crop-btn').style.display = 'none'
+          document.getElementById('confirm-btn').style.display = 'block'
+
+        });
+      });
+    });	
+  </script>
+  <!-- ----------------------------------------end script------------------------------------->
+  <!-- ----------------------------------------Search Checkbox script------------------------------------->
+  <script>
+    $(document).on('change', ".checks", function () {
+      var value = "";
+      var checks = $(this).val();
+      value = value + "?service=" + $(this).val();
+      window.location.href = value;
+      set_short_filter(value);
+    });
+  </script>
+
+  <!-- <script type="text/javascript">
+  function Searchdat()
+  {
+    var inpute,table,tr,td,filter,i,displaydata;
+    inpute= document.getElementById("searchdd1");
+    filter = input.value.toUppercase();
+    table = document.getElementById("table1");
+    tr = table.getElementById("subit");
+    for (i=0; i<tr.length;i++);
+    {
+      td=tr[i].getElementByTagName("td")[5];
+      if(td)
+      {
+        displaydata=td.innerText;
+        if(displaydata.toUppercase.indexOf(filter)>1)
+        {
+          tr[i].style.display= "";
+        }
+        else
+        tr[i].style.display= "none";
+      }
+    }
+  }
+
+</script> -->
+
+  <!-- ----------------------------------------end script------------------------------------->
+  <!-- ----------------------------------------edit service script------------------------------------->
+  <script>
+    $(document).on("click", ".service_1", function () {
+      $('.page-loader').show();
+      var id = $(this).data("id");
+
+      $.ajax({
+        method: "GET",
+        url: "/dashboard/Edit_service/" + id,
+        dataType: "html",
+        success: function (data) {
+          $('.page-loader').hide();
+          $("#exampleModal .modal-body").html(data);
+
+        }
+      });
+    });
+  </script>
+
+  <!-- -------------------------------------------------delete script--------------------------------- -->
+
+  <script type="text/javascript">
+    $(document).on('#image-box', '#post-form', function (e) {
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: 'dashboard/my_service/',
+        headers: { "X-CSRFToken": token },
+        data:
+        {
+          task: $("#Supplier_Name").val(),
+          task: $("#Business_Country_Location").val(),
+          task: $("#Tailor_Specialization").val(),
+          task: $("#Experience").val(),
+          task: $("#Multinational_Shippping").val(),
+          task: $("#Targeted_Customer").val(),
+          task: $("#Tailor_Staff_Gender").val(),
+          task: $("#Phone_Number").val(),
+          task: $("#Full_Address").val(),
+          task: $("#Check_Box").val(),
+          task: $("#service_disc").val(),
+          task: $(".service_image").val(),
+
+        },
+        success: function () {
+          alert('Saved');
+        }
+      })
+    });
+  </script>
+
+
+  <script>
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $(".dropdown-menu li").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+  <!-- -------------------------------------------------------------------------------- -->
+  <script>
+    $(document).ready(function () {
+      $(".delete_service").click(function () {
+        var delete_value = $(this).data("id");
+        console.log(delete_value)
+        swal({
+          title: "Are you sure?",
+          text: "You want to delete !",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: 'btn-danger',
+          confirmButtonText: 'Yes, delete it!',
+          closeOnConfirm: false,
+          // closeOnCancel: false
+        },
+          function (isConfirm) {
+            if (isConfirm) {
+              var token = '{{csrf_token}}';
+              $.ajax({
+                headers: { "X-CSRFToken": token },
+                url: "/services/del_service/" + delete_value,
+                type: "POST",
+                success: function () {
+                  swal("Done!", "It was succesfully deleted!", "success");
+                  location.reload();
+                }
+              });
+            }
+            else {
+              swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+          })
+      });
+    });
+  </script>
+  <!-- ------------------------------------------------------------------------------------ -->
+
+  <script type="">
+      const valueInput = document.querySelector('input[type="text"]');
+    const colorInput = document.querySelector('input[type="color"]');
+    
+    // Sync the color from the picker
+    const syncColorFromPicker = () => {
+      valueInput.value = colorInput.value;
+    };
+    
+    // Sync the color from the field
+    const syncColorFromText = () => {
+      colorInput.value = valueInput.value;
+    };
+    
+    // Bind events to callbacks
+    colorInput.addEventListener("input", syncColorFromPicker, false);
+    valueInput.addEventListener("input", syncColorFromText, false);
+    
+    // Optional: Trigger the picker when the text field is focused
+    valueInput.addEventListener("focus", () => colorInput.click(), false);
+    
+    // Refresh the text field
+    syncColorFromPicker();
+    </script>
+
+
+
+
+  <script type="">
+
+        $(document).ready(function() {
+                $('#multiple-checkboxess').multiselect({
+                  includeSelectAllOption: true,
+                });
+            });
+      </script>
+
+  <script type="">
+
+        $(document).ready(function() {
+                $('#multiple-checkboxe').multiselect({
+                  includeSelectAllOption: true,
+                });
+            });
+      </script>
+
+
+
+
+
+  <script type="">
+
+        $(document).ready(function() {
+                $('#multiple-checkboxes').multiselect({
+                  includeSelectAllOption: true,
+                });
+            });
+      </script>
+
+  <script type="">
+
+        $(document).ready(function() {
+                $('#multiple-checkboxe').multiselect({
+                  includeSelectAllOption: true,
+                });
+            });
+      </script>
+
+
+
+
+
+
+
+
+  <script>
+    //Init pageloader
+
+    if ($('.pageloader').length) {
+      $('.pageloader').toggleClass('is-active');
+      $(window).on('load', function () {
+        var pageloaderTimeout = setTimeout(function () {
+          $('.pageloader').toggleClass('is-active');
+          $('.infraloader').toggleClass('is-active');
+          clearTimeout(pageloaderTimeout);
+        }, 700); //Placeloaders
+
+
+
+      });
+    }
+    $('.slick-slider').slick({
+      centerMode: true,
+      slidesToShow: 3,
+      dots: false,
+      loop: false,
+      //arrows: true,
+      swipe: true,
+      //  infinite: true,
+      swipeToSlide: true,
+      centerPadding: '0px 50px ',
+      //adaptiveHeight: true,
+      prevArrow: '<button class="slide-arrow prev-arrow"><i class="fa fa-arrow-left"></i></button>',
+      nextArrow: '<button class="slide-arrow next-arrow"><i class="fa fa-arrow-right" ></i></button>',
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            adaptiveHeight: true,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    });
+
+
+
+
+    $('.suppliers-slider').slick({
+      //centerMode: true,
+      slidesToShow: 3,
+      dots: false,
+      loop: false,
+      //arrows: true,
+      swipe: true,
+      //  infinite: true,
+      swipeToSlide: true,
+      centerPadding: '0px 50px ',
+      //adaptiveHeight: true,
+      prevArrow: '<button class="slide-arrow prev-arrow"><i class="fa fa-arrow-left"></i></button>',
+      nextArrow: '<button class="slide-arrow next-arrow"><i class="fa fa-arrow-right" ></i></button>',
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            adaptiveHeight: true,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    });
+
+
+    $('.product-slider').slick({
+      //centerMode: true,
+      slidesToShow: 4,
+      dots: false,
+      loop: false,
+      //arrows: true,
+      swipe: true,
+      //  infinite: true,
+      swipeToSlide: true,
+      //centerPadding:'100px 100px ',
+      //adaptiveHeight: true,
+      prevArrow: '<button class="slide-arrow prev-arrow"><i class="fa fa-arrow-left"></i></button>',
+      nextArrow: '<button class="slide-arrow next-arrow"><i class="fa fa-arrow-right" ></i></button>',
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            adaptiveHeight: true,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    });
+
+
+    $('.counter').each(function () {
+      var $this = $(this),
+        countTo = $this.attr('data-count');
+
+      $({ countNum: $this.text() }).animate({
+        countNum: countTo
+      },
+
+        {
+
+          duration: 8000,
+          easing: 'linear',
+          step: function () {
+            $this.text(Math.floor(this.countNum));
+          },
+          complete: function () {
+            $this.text(this.countNum);
+            //alert('finished');
+          }
+
+        });
+
+
+
+    });
+
+    $(".textlimit span").text(function (index, currentText) {
+      var maxLength = $(this).parent().attr('data-maxlength');
+      if (currentText.length >= maxLength) {
+        return currentText.substr(0, maxLength) + "...";
+      } else {
+        return currentText
+      }
+    });
+
+
+    $(".name-sup, .surname").text(function (index, currentText) {
+      var maxLength = $(this).parent().attr('data-maxlength');
+      if (currentText.length >= maxLength) {
+        return currentText.substr(0, maxLength) + "...";
+      } else {
+        return currentText
+      }
+    });
+
+  </script>
+
+  <script>
+    //Init pageloader
+
+    if ($('.pageloader').length) {
+      $('.pageloader').toggleClass('is-active');
+      $(window).on('load', function () {
+        var pageloaderTimeout = setTimeout(function () {
+          $('.pageloader').toggleClass('is-active');
+          $('.infraloader').toggleClass('is-active');
+          clearTimeout(pageloaderTimeout);
+        }, 700); //Placeloaders
+
+
+
+      });
+    }
+
+  </script>
+
+
+  <script type="">
+      function readFile(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+    
+        reader.onload = function(e) {
+          var htmlPreview =
+            '<img width="200" src="' + e.target.result + '" />' +
+            '<p>' + input.files[0].name + '</p>';
+          var wrapperZone = $(input).parent();
+          var previewZone = $(input).parent().parent().find('.preview-zone');
+          var boxZone = $(input).parent().parent().find('.preview-zone').find('.box').find('.box-body');
+    
+          wrapperZone.removeClass('dragover');
+          previewZone.removeClass('hidden');
+          boxZone.empty();
+          boxZone.append(htmlPreview);
+        };
+    
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    
+    function reset(e) {
+      e.wrap('<form>').closest('form').get(0).reset();
+      e.unwrap();
+    }
+    
+    $(".dropzone").change(function() {
+      readFile(this);
+    });
+    
+    $('.dropzone-wrapper').on('dragover', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $(this).addClass('dragover');
+    });
+    
+    $('.dropzone-wrapper').on('dragleave', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $(this).removeClass('dragover');
+    });
+    
+    $('.remove-preview').on('click', function() {
+      var boxZone = $(this).parents('.preview-zone').find('.box-body');
+      var previewZone = $(this).parents('.preview-zone');
+      var dropzone = $(this).parents('.form-group').find('.dropzone');
+      boxZone.empty();
+      previewZone.addClass('hidden');
+      reset(dropzone);
+    });
+    $(document).ready(function() {
+      $('.accordion a').click(function(){
+        $(this).toggleClass('active');
+        $(this).next('.content').slideToggle(400);
+       });
+    });
+    </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    var before_loadtime = new Date().getTime();
+    window.onload = Pageloadtime;
+    function Pageloadtime() {
+      var aftr_loadtime = new Date().getTime();
+      t = Math.round((aftr_loadtime - before_loadtime) / 60)
+    }
+    $.getJSON('http://ip.jsontest.com/', function (data) {
+      var i = JSON.stringify(data.ip, null, 2)
+      var c = (new Date()).toString().split('(')[1].split(" ")[0]
+      var b = (function (agent) {
+        switch (true) {
+          case agent.indexOf("edge") > -1: return "MS Edge";
+          case agent.indexOf("edg/") > -1: return "Edge ( chromium based)";
+          case agent.indexOf("opr") > -1 && !!window.opr: return "Opera";
+          case agent.indexOf("chrome") > -1 && !!window.chrome: return "Chrome";
+          case agent.indexOf("trident") > -1: return "MS IE";
+          case agent.indexOf("firefox") > -1: return "Mozilla Firefox";
+          case agent.indexOf("safari") > -1: return "Safari";
+          default: return "other";
+        }
+      })(window.navigator.userAgent.toLowerCase());
+      var w = window.location.origin
+      var s = '{{script_id}}'
+      $.ajax({
+        type: 'POST',
+        url: '{{BASE_URL}}/tracking-code/',
+        dataType: 'json',
+        data: { 'i': i, 'c': c, 'b': b, 'w': w, 's': s, 't': t },
+      });
+    });
+  </script>
+</body>
+
+</html>

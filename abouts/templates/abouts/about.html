@@ -1,0 +1,54 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+
+<div class="banner-profile" style="background-image:url({{about_back|background_img}})">
+  <div class="profile-overlay">
+    <div class="container">
+      <div class="heading-title supplies text-center">
+        <h1>
+          <div class="left-cricle"></div>
+          <div class="right-cricle"></div>
+          <span>About Us</span>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="breadcr4eam">
+  <div class="container">
+    <nav class="breadcrumb-new">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">About Us</a></li>
+
+      </ol>
+    </nav>
+
+  </div>
+</div>
+
+<section class="bg-lightshow">
+  <div class="container">
+    {% for item in about_us %}
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="about-us mb-4">{{item.tittle}}</h1>
+      </div>
+      <div class="col-md-6">
+        <div class="about-text">
+          <h2>{{item.sub_tittle}}</h2>
+          <p>{{item.about_disc}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-5 offset-md-1">
+        <div class="about-us-img">
+          <img src="{{item.about_image.url}}" alt="" />
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

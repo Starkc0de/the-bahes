@@ -1,0 +1,167 @@
+{% extends 'base_template.html' %} {% block content %} {% load static %}
+
+<div class="banner-profile" style="background-image:url({{service_back|background_img}})">
+  <div class="profile-overlay">
+    <div class="container">
+      <div class="heading-title supplies text-center">
+        <h1>
+          <div class="left-cricle"></div>
+
+          <div class="right-cricle"></div>
+          {% for side in tittle %}
+          <span>{{side.service_tittle}}</span>
+          {% endfor %}
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="breadcr4eam">
+  <div class="container">
+    <nav class="breadcrumb-new">
+      <ol class="breadcrumb">
+        {% for side in tittle %}
+        <li class="breadcrumb-item"><a href="#">{{side.service_tittle}}</a></li>
+        {% endfor %}
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="bg-lightshow">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="supliers-left">
+          <h3>Filter</h3>
+          <div class="filter-menu">
+            <div class="accordion" id="faq">
+              <div class="card">
+                <div class="card-header" id="faqhead2">
+                  <a href="supplier-view.php" class="btn-header-link collapsed" data-toggle="collapse"
+                    data-target="#faq2" aria-expanded="true" aria-controls="faq2">Services</a>
+                </div>
+
+                <div id="faq2" class="collapse show" aria-labelledby="faqhead2" data-parent="#faq"
+                  style="border-bottom: 0px">
+                  <div class="card-body">
+                    <ul class="short_by">
+                      <li>
+                        {% for side in service %} {% if side.Tailor_Specialization %}                        
+                        <a href="#">
+                          {{side.Tailor_Specialization}}<span><input type="checkbox"
+                              value="{{side.Tailor_Specialization}}" class="checks" /></span></a>
+                        {% else %}
+                        <a href="#">
+                          {{side.Tailor_Specialization}}<span><input type="checkbox"
+                              value="{{side.Tailor_Specialization}}" class="checks" checked /></span></a>
+                        {% endif %} {% endfor %}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="supplier_colorbox">
+          <h3 class="mb-4">
+            Services
+            <div class="supplier_count-1"><span>5</span></div>
+          </h3>
+          <div class="supplier_counts">
+            <p class="sortby">Sort By :</p>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle buttonss" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Latest
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" name="search" href="#">Old</a>
+                <a class="dropdown-item" href="#">Price</a>
+                <a class="dropdown-item" href="#">Letest</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="supliers-list">
+          <!-- <h3 class="mb-4">Services</h3> -->
+          <div class="mb-4 border-bottom pb-4">
+            <a href="">
+              <div>
+                <div class="row">
+                  {% for servic in page_obj.object_list %}
+                  <div class="col-md-4">
+                    <a href="#">
+                      <div class="services-box">
+                        {% if servic.service_image %}
+                        <img src="{{ servic.service_image.url }}" alt="" />
+                        {% endif %}
+                        <h4>{{servic.Tailor_Specialization}}</h4>
+                      </div>
+                    </a>
+                  </div>
+
+                  <div class="col-md-8">
+                    <div class="subit">
+                      <h3>{{servic.Tailor_Specialization}}</h3>
+                      <p>{{servic.service_disc}}</p>
+                      <div class="profile-div">
+                        <ul>
+                          <li>
+                            <a href="#"><img src="{% static 'images/profile-1.jpg' %}" alt="" /></a>
+                          </li>
+                          <li>
+                            <a href="#"><img src="{% static 'images/profile-2.jpg' %}" alt="" /></a>
+                          </li>
+                          <li class="overcount">
+                            <a href="#"><img src="{% static 'images/profile-3.jpg' %}" alt="" />
+                              <span>50 +</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <nav aria-label="Page navigation " class="supplier-pagination">
+            {% if page_obj.has_other_pages %}
+            <ul class="pagination justify-content-center">
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+              </li>
+              {% else %}
+              <li class="active"><span>Previous</span></li>
+              {% endif %} {% for i in page_obj.paginator.page_range %} {% if page_obj.number == i %}
+              
+              <li class="active">
+                <span class="page-item">{{ i }} <span class="sr-only">(current)</span></span>
+              </li>
+              {% else %}
+              <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %} {% endfor %} {% if page_obj.has_next %}
+              <li>
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+              </li>
+              {% else %}
+              <li class="disabled"><span>Next</span></li>
+              {% endif %}
+            </ul>
+            {% endif %}
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

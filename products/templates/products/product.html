@@ -1,0 +1,211 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+
+<div class="banner-profile" style="background-image:url({{product_back|background_img}})">
+  <div class="profile-overlay">
+    <div class="container">
+      <div class="heading-title supplies text-center">
+        <h1>
+          <div class="left-cricle"></div>
+          <div class="right-cricle"></div>
+          {% for titt in title %}
+          <span>{{titt.product_tittle}}</span>
+          {% endfor %}
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="breadcr4eam">
+  <div class="container">
+    <nav class="breadcrumb-new">
+      <ol class="breadcrumb">
+        {% for pro in title %}
+        <li class="breadcrumb-item"><a href="#">{{pro.product_tittle}}</a></li>
+        {% endfor %}
+
+      </ol>
+    </nav>
+
+  </div>
+</div>
+
+<section class="bg-lightshow">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="supliers-left">
+          <h3>Filter</h3>
+          <div class="filter-menu">
+            <div class="accordion" id="faq">
+              <div class="card">
+                <div class="card-header" id="faqhead1">
+                  <a href="supplier-view.php" class="btn-header-link" data-toggle="collapse" data-target="#faq1"
+                    aria-expanded="true" aria-controls="faq1">Products</a>
+                </div>
+
+                <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq"
+                  style="border-bottom:0px;">
+                  <div class="card-body">
+                    <ul>
+                      {% for feb in result_list %}
+                      {% if feb.Fabric_Type %}
+                      <li><a href="#"> {{feb.Fabric_Type}}<span><input type="checkbox" value="{{feb.Fabric_Type}}" class="service" /></span></a></li>
+                      {% endif %}
+                      {% if feb.Thread_Type %}
+                      <li><a href="#"> {{feb.Thread_Type}}<span><input type="checkbox"  value="{{feb.Thread_Type}}" class="service"/></span></a></li>
+                      {% endif %}
+                      {% endfor %}
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="supplier_colorbox">
+          <h3 class="mb-4">Products
+            <div class="supplier_count"><span>10</span>
+            </div>
+          </h3>
+          <div class="supplier_counts">
+            <p class="sortby">Sort By :</p>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle buttonss" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Latest
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Old</a>
+                <a class="dropdown-item" href="#">Letest</a>
+                <a class="dropdown-item" href="#">Price</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="supliers-list">
+          <h3 class="mb-4">Products</h3>
+          <div class="row">
+            {% for find_product in page_obj.object_list %}
+            
+            <div class="col-md-4 mb-4">
+              <div class="product-box textlimit">
+                {% if find_product.Thread_Image %}
+                <img src="{{find_product.Thread_Image.url}}" alt="">
+                {% endif %}
+                {% if find_product.Upload_Image %}
+                <img src="{{find_product.Upload_Image.url}}" alt="">
+                {% endif %}
+                {% if find_product.Thread_Available_Quantity %}
+                <a href="{% url 'product:product_detail_page' find_product.pk find_product.type2 %}">
+                  <h4 data-maxlength="15"><span>{{find_product.Thread_Available_Quantity}}</span></h4>
+                </a>
+                {% endif %}
+                {% if find_product.Thread_Type %}
+                <p data-maxlength="15"><span>{{find_product.Thread_Type}}</span></p>
+                {% endif %}
+                {% if find_product.Thread_Price %}
+                <div class="text-right">
+                  <a class="kw" href="{% url 'product:product_detail_page' find_product.pk type2 find_product.type2 %}" tabindex="0">{{find_product.Thread_Price}}</a>
+                </div>
+                {% endif %}
+        
+                {% if find_product.Tailor_Specialization %}
+                <a href="{% url 'product:product_detail_page' find_product.pk find_product.type1 %}">
+                  <h4 data-maxlength="15"><span>{{find_product.Tailor_Specialization}}</span></h4>
+                </a>
+                {% endif %}
+                {% if find_product.Fabric_Type %}
+                <p data-maxlength="15"><span>{{find_product.Fabric_Type}}</span></p>
+                {% endif %}
+                {% if find_product.Fabric_Price %}
+                <div class="text-right">
+                  <a class="kw" href="{% url 'product:product_detail_page' find_product.pk find_product.type1 %}" tabindex="0">{{find_product.Fabric_Price}}</a>
+                </div>
+                {% endif %}
+              </div>
+            </div>                       
+  
+            {% endfor %}
+          </div>
+
+          <nav aria-label="Page navigation " class="supplier-pagination mt-4">
+            {% if page_obj.has_other_pages %}
+            <ul class="pagination justify-content-center">
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a
+                  href="?page={{ page_obj.previous_page_number }}"
+                  class="page-link"
+                  >Previous</a
+                >
+              </li>
+              {% else %}
+              <li class="active"><span>Previous</span></li>
+              {% endif %} {% for i in page_obj.paginator.page_range %} 
+              {% if page_obj.number == i %}
+              <li class="active">
+                <span class="page-item"
+                  >{{ i }} <span class="sr-only">(current)</span></span
+                >
+              </li>
+              {% else %}
+              <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %} {% endfor %} {% if page_obj.has_next %}
+              <li>
+                <a
+                  href="?page={{ page_obj.next_page_number }}"
+                  class="page-link"
+                  >Next</a
+                >
+              </li>
+              {% else %}
+              <li class="disabled"><span>Next</span></li>
+              {% endif %}
+            </ul>
+            {% endif %}
+          </nav>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="view-profile-div">
+    <div class="ksd">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+          <span class="close-box" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+          <div class="modal-body padding-ksd">
+            <div class="ksd-pay bg-colorform">
+              <p>Kindly pay one time Registration Fee.</p>
+              <h2>29.900 kd</h2>
+              <a href="#" class="pay-now">Pay Now</a>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+
+<div class="banner-profile">
+<div class="profile-overlay">
+<div class="container">
+<div class="heading-title supplies text-center">
+      <h1>
+      <div class="left-cricle"></div>
+      <div class="right-cricle"></div>
+      <span>Privacy Policy</span></h1>
+    </div>
+</div>
+</div>
+</div>
+<div class="breadcr4eam">
+<div class="container">
+<nav class="breadcrumb-new">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Privacy Policy</a></li>
+    
+  </ol>
+</nav>
+       
+</div>
+</div>
+
+<section class="bg-lightshow">
+<div class="container">
+<div class="row">
+  {% for privacy in privacy_policy %}
+<div class="col-md-12"><h1 class="about-us mb-4">{{privacy.tittle_privacy}}</h1></div>
+<div class="col-md-8">
+<div class="about-text">
+<ul>
+<li> {{privacy.discription_privacy}}</li>
+<!-- <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li>
+<li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li>
+<li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li>
+<li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li>
+<li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li>
+<li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li>
+<li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li>
+<li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod .</li> -->
+
+</ul>
+
+</div>
+</div>
+
+<div class="col-md-4">
+
+<img src="{{privacy.privacy_image.url}}" alt=""/>
+
+</div>
+{% endfor %}
+
+</div>
+</div>
+</section>
+
+
+
+{% endblock %}

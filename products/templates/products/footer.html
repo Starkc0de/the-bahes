@@ -1,0 +1,5 @@
+<ul>
+  {% for data in get_data %}
+  <li><a href="{% url 'service:service_page' %}"> {{data}} </a></li>
+  {% endfor %}
+</ul>
